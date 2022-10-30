@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  
+
   const adminConfig: ServiceAccount = {
     projectId: configService.get<string>('FIREBASE_PROJECT_ID'),
     privateKey: configService
@@ -27,4 +27,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();

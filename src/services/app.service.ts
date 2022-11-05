@@ -10,7 +10,9 @@ export class AppService {
       .firestore()
       .collection('Groups')
       .doc('9F34J3byex4l7ZSCixgH');
+
     const group = await groupRef.get();
+
     if (group.exists) {
       return group.data();
     }

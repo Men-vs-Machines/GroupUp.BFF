@@ -2,6 +2,7 @@ import { Injectable, Scope } from '@nestjs/common';
 import { Group } from 'src/models/group';
 import { GroupService } from '../groups/group.service';
 import { UserService } from '../users/user.service';
+import { GroupSchema } from './../../models/group';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserGroupOrchestrationService {
@@ -16,6 +17,7 @@ export class UserGroupOrchestrationService {
     });
 
     await Promise.all([userPromises]);
-    return groupRef.id;
+    // TODO: Why is this not returning a string.....
+    return JSON.stringify(groupRef.id);
   }
 }

@@ -9,7 +9,7 @@ export class GroupsController {
 
   @Post()
   async createGroup(@Body() group: Group): Promise<string> {
-    return JSON.stringify(await this.userGroupService.createGroupWithUser(group));
+    return await this.userGroupService.createGroupWithUser(group);
   }
 
   @Get(':id')

@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { User } from 'src/models/user';
 import { UserService } from 'src/services/users/user.service';
 
@@ -14,5 +14,12 @@ export class UsersController {
   @Delete()
   async deleteAllUsers(): Promise<void> {
     return await this.userService.deleteAllUsers();
+  }
+
+  @Post()
+  async createUser(@Body() id: string): Promise<void> {
+    // TODO: Fix this it doesnt work
+    console.log('createUser', id);
+    return await this.userService.createUser(id);
   }
 }

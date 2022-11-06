@@ -13,6 +13,7 @@ export class UserService {
 
   public async getUser(id: string): Promise<User> {
     const result = await admin.firestore().collection('users').doc(id).get();
+
     if (!result.exists) {
       throw new NotFoundException('User not found');
     }
@@ -24,8 +25,14 @@ export class UserService {
     return UserSchema.parse(result.data());
   }
 
+  public async createUser(userId: string): Promise<void> {
+    const ref = admin.firestore().collection('users').doc(userId);
+    await ref.set({ id: userId });
+  }
+
   public async deleteAllUsers(): Promise<void> {
-    admin.auth().deleteUsers(await this.getAllUserIds());
+    const userIds = await this.getAllUserIds();
+    admin.auth().deleteUsers(userIds);
   }
 
   private getAllUserIds(): string[] | PromiseLike<string[]> {

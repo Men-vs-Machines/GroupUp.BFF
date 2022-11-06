@@ -23,4 +23,19 @@ export class UserService {
 
     return UserSchema.parse(result.data());
   }
+
+  public async deleteAllUsers(): Promise<void> {
+    admin.auth().deleteUsers(await this.getAllUserIds());
+  }
+
+  private getAllUserIds(): string[] | PromiseLike<string[]> {
+    return admin
+      .auth()
+      .listUsers()
+      .then((listUsersResult) => {
+        return listUsersResult.users.map((userRecord) => {
+          return userRecord.uid;
+        });
+      });
+  }
 }

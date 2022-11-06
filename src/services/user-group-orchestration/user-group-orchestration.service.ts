@@ -7,14 +7,15 @@ import { UserService } from '../users/user.service';
 export class UserGroupOrchestrationService {
   constructor(private userService: UserService, private groupService: GroupService) {}
 
-  async createGroupWithUser(group: Group) {
+  async createGroupWithUser(group: Group): Promise<string> {
     const users = group.users;
     const groupRef = await this.groupService.createGroup(group);
-    const userPromises = users.forEach((user) => {
+    const userPromises = users.map((user) => {
       user.groups.push(groupRef.id);
       this.userService.updateUser(user);
     });
 
-    return await Promise.all([userPromises]);
+    await Promise.all([userPromises]);
+    return groupRef.id;
   }
 }

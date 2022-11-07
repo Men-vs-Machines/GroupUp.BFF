@@ -17,9 +17,9 @@ export class UsersController {
   }
 
   @Post()
-  async createUser(@Body() id: string): Promise<void> {
+  async createUser(@Body() user: User): Promise<void> {
     // TODO: Fix this it doesnt work
-    console.log('createUser', id);
-    return await this.userService.createUser(id);
+    console.log('createUser', user);
+    return await this.userService.createUser(user);
   }
 }

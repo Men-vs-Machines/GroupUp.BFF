@@ -25,14 +25,14 @@ export class UserService {
     return UserSchema.parse(result.data());
   }
 
-  public async createUser(userId: string): Promise<void> {
-    const ref = admin.firestore().collection('users').doc(userId);
-    await ref.set({ id: userId });
+  public async createUser(user: User): Promise<void> {
+    await admin.firestore().collection('users').doc(user.id).set(user);
   }
 
   public async deleteAllUsers(): Promise<void> {
     const userIds = await this.getAllUserIds();
-    admin.auth().deleteUsers(userIds);
+    await Promise.all(userIds.map((userId) => admin.firestore().collection('users').doc(userId).delete()));
+    await admin.auth().deleteUsers(userIds);
   }
 
   private getAllUserIds(): string[] | PromiseLike<string[]> {

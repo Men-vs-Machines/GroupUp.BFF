@@ -9,8 +9,10 @@ export class UserGroupOrchestrationService {
   constructor(private userService: UserService, private groupService: GroupService) {}
 
   async createGroupWithUser(group: Group): Promise<string> {
-    const users = group.users;
+    const { userIds } = group;
     const groupRef = await this.groupService.createGroup(group);
+
+    const users = await this.userService.getUsers(userIds);
     const userPromises = users.map((user) => {
       user.groups.push(groupRef.id);
       this.userService.updateUser(user);

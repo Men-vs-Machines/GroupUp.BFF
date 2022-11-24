@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { User } from 'src/models/user';
 import { UserService } from 'src/services/users/user.service';
 
@@ -21,5 +21,10 @@ export class UsersController {
     // TODO: Fix this it doesnt work
     console.log('createUser', user);
     return await this.userService.createUser(user);
+  }
+
+  @Put()
+  async updateUser(@Body() user: User): Promise<FirebaseFirestore.WriteResult> {
+    return await this.userService.updateUser(user);
   }
 }

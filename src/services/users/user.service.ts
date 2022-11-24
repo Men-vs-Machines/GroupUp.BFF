@@ -29,6 +29,11 @@ export class UserService {
     await admin.firestore().collection('users').doc(user.id).set(user);
   }
 
+  public async getUsers(userIds: string[]): Promise<User[]> {
+    const userPromises = userIds.map((userId) => this.getUser(userId));
+    return await Promise.all(userPromises);
+  }
+
   public async deleteAllUsers(): Promise<void> {
     const userIds = await this.getAllUserIds();
     await Promise.all(userIds.map((userId) => admin.firestore().collection('users').doc(userId).delete()));

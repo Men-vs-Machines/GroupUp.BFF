@@ -7,7 +7,9 @@ export class GroupService {
   constructor() {}
 
   public async createGroup(group: Group): Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>> {
-    return await admin.firestore().collection('groups').add(group);
+    const groupRef = await admin.firestore().collection('groups').add(group);
+    await groupRef.set({ id: groupRef.id }, { merge: true });
+    return groupRef;
   }
 
   public async getGroup(id: string): Promise<Group> {

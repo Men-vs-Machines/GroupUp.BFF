@@ -2,7 +2,6 @@ import { Injectable, Scope } from '@nestjs/common';
 import { Group } from 'src/models/group';
 import { GroupService } from '../groups/group.service';
 import { UserService } from '../users/user.service';
-import { GroupSchema } from './../../models/group';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserGroupOrchestrationService {

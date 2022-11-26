@@ -4,8 +4,6 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class GroupService {
-  constructor() {}
-
   public async createGroup(group: Group): Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>> {
     const groupRef = await admin.firestore().collection('groups').add(group);
     await groupRef.set({ id: groupRef.id }, { merge: true });
@@ -20,5 +18,9 @@ export class GroupService {
     }
 
     throw new Error('Group not found');
+  }
+
+  public async updateGroup(group: Group): Promise<admin.firestore.WriteResult> {
+    return await admin.firestore().collection('groups').doc(group.id).set(group, { merge: true });
   }
 }

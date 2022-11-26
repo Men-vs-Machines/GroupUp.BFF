@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Group } from 'src/models/group';
 import { GroupService } from 'src/services/groups/group.service';
 import { UserGroupOrchestrationService } from './../../services/user-group-orchestration/user-group-orchestration.service';
@@ -15,5 +15,10 @@ export class GroupsController {
   @Get(':id')
   async getGroup(@Param('id') id: string): Promise<Group> {
     return await this.groupService.getGroup(id);
+  }
+
+  @Put()
+  async updateGroup(@Body() group: Group) {
+    return await this.groupService.updateGroup(group);
   }
 }

@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+export const PartnerSchema = z.object({
+  groupId: z.string(),
+  userId: z.string(),
+});
+
 export const UserSchema = z.object({
   displayName: z.string().optional().nullable(),
   password: z.string().min(6).optional(),
@@ -7,6 +12,7 @@ export const UserSchema = z.object({
   id: z.string().optional(),
   email: z.string().email().optional(),
   groups: z.array(z.string()).optional().default([]),
+  partners: z.array(PartnerSchema).optional().default([]),
 });
 
 export const UserDtoSchema = z.object({
